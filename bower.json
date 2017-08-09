@@ -1,9 +1,9 @@
 {
-  "name": "angular-areas",
+  "name": "angular-select-areas",
   "authors": [
-    "delkant <delkant@gmail.com>"
+    "Safidison <safidison.rj@gmail.com>"
   ],
-  "description": "Directive that let you select and manipulate multiple areas of an image, move them and resize them too.",
+  "description": "extented from https://github.com/delkant/angular-areas",
   "main": "angular-areas.js",
   "dependencies": {
       "angular": "1.4.8",
@@ -20,7 +20,7 @@
     "directive"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/delkant/angular-areas",
+  "homepage": "https://github.com/safidison/angular-select-area",
   "ignore": [
     "**/.*",
     "node_modules",

@@ -60,3 +60,16 @@
 	cursor: pointer;
 	padding: 1px;
 }
+
+.select-areas-edit-area {
+	background: url('bt-edit.png');
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+}
+
+.edit-area {
+	position: absolute;
+	cursor: pointer;
+	padding: 1px;
+}

@@ -50,10 +50,10 @@ angular.module('app').controller('DemoController', function($scope
 	$scope.fields900 = testData.slice(0);
 	$scope.fields600 = testData.slice(0);
 	
-	$scope.onAddArea = function(ev, boxId, areas, area) {
+	$scope.onAddArea = function(ev,area,areas,boxId) {
 		console.log("area added");
 	}
-	$scope.onRemoveArea = function(ev, boxId, areas, area) {
+	$scope.onRemoveArea = function(ev,area,areas,boxId) {
 		$scope.log900= JSON.stringify(areas);
 		$scope.$apply();
 		if (area.id) {
@@ -61,14 +61,22 @@ angular.module('app').controller('DemoController', function($scope
 			console.log("one of my initial areas has been removed " + area.id);
 		}
 	}
+
+	$scope.onEditArea = function(ev, area,areas,boxId) {
+		$scope.log900= JSON.stringify(areas);
+		$scope.$apply();
+		if (area.id) {
+			//since new areas doesn't have id
+			console.log("EDIT ****** " + area.id);
+		}
+	}
 	
-	$scope.onChangeAreas900 = function(ev, boxId, areas, area) {
-		console.log(areas);
+	$scope.onChangeAreas900 = function(ev,area,areas,boxId) {
 		$scope.log900 = JSON.stringify(areas);
 		$scope.$apply();
 	}
 	
-	$scope.onChangeAreas600 = function(ev, boxId, areas, area) {
+	$scope.onChangeAreas600 = function(ev, area,areas,boxId) {
 		$scope.log600 = JSON.stringify(areas);
 		$scope.$apply();
 	}

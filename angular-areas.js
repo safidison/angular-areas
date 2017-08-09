@@ -18,6 +18,7 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 							areas : (typeof $attrs.ngAreas ==='undefined') ? [] : $scope.ngAreas_areas,
 							onLoaded : (typeof $attrs.ngAreasOnLoad === 'undefined') ? null: $scope.$eval($attrs.ngAreasOnLoad),
 							onAdd : (typeof $attrs.ngAreasOnAdd === 'undefined') ? null : $scope.$eval($attrs.ngAreasOnAdd),
+							onEdit : (typeof $attrs.ngAreasOnEdit === 'undefined') ? null : $scope.$eval($attrs.ngAreasOnEdit),
 							onDelete : (typeof $attrs.ngAreasOnRemove === 'undefined') ? null : $scope.$eval($attrs.ngAreasOnRemove),
 							onChanged : (typeof $attrs.ngAreasOnChange === 'undefined') ? null: $scope.$eval($attrs.ngAreasOnChange),
 							allowEdit:   (typeof allow.edit === 'undefined') ? true :allow.edit,
@@ -70,6 +71,7 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		            $selection,
 		            $resizeHandlers = {},
 		            $btDelete,
+		            $btEdit,
 		            resizeHorizontally = true,
 		            resizeVertically = true,
 		            selectionOffset = [0, 0],
@@ -215,6 +217,14 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		                        "z-index": area.z + 1
 		                    });
 		                }
+                        if ($btEdit) {
+                            $btEdit.css({
+                                display: visible ? "block" : "none",
+                                left: area.x + area.width + 1,
+                                top: area.y - $btDelete.outerHeight() + 21,
+                                "z-index": area.z + 1
+                            });
+                        }
 		            },
 		            updateCursor = function (cursorType) {
 		                $outline.css({
@@ -458,10 +468,15 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		                    $handler.remove();
 		                });
 		                $btDelete.remove();
+		                $btEdit.remove();
 		                parent._remove(areaid);
 		                fireEvent("onDelete");
 		                fireEvent("changed");
 		            },
+                    editSelection = function (event) {
+                        fireEvent("onEdit");
+                        fireEvent("changed");
+                    },
 		            getElementOffset = function (object) {
 		                var offset = $(object).offset();
 
@@ -538,6 +553,19 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		                .insertAfter($selection);
 		        }
 
+               // initialize edit button
+               if (options.allowEdit) {
+                   var bindToEdit = function ($obj) {
+                       $obj.click(editSelection)
+                           .bind("touchstart", editSelection)
+                           .bind("tap", editSelection);
+                       return $obj;
+                   };
+                   $btEdit = bindToEdit($("<div class=\"ngAreas-element edit-area\" />"))
+                       .append(bindToEdit($("<div class=\"ngAreas-element select-areas-edit-area\" />")))
+                       .insertAfter($btDelete);
+               }
+
 		        if (options.allowMove) {
 		            $selection.mousedown(pickSelection).bind("touchstart", pickSelection);
 		        }
@@ -606,6 +634,7 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		                onChanging: null,
 		                onChanged: null,
 		                onAdd: null,
+		                onEdit: null,
 		                onDelete: null
 		            };
 
@@ -634,9 +663,13 @@ ngAreas.directive("ngAreas", ['$parse', function ($parse) {
 		        if (this.options.onAdd) {
 		            this.$image.on("onAdd", this.options.onAdd);
 		        }
-		        if (this.options.onDelete) {
-		        	this.$image.on("onDelete", this.options.onDelete);
+		        if (this.options.onEdit) {
+		        	this.$image.on("onEdit", this.options.onEdit);
 		        }
+
+                if (this.options.onDelete) {
+                    this.$image.on("onDelete", this.options.onDelete);
+                }
 
 		        if (this.options.onLoaded) {
 		            this.$image.on("loaded", this.options.onLoaded);
