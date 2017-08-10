@@ -4,7 +4,7 @@ Angular Directive ( ng-areas )  that let you select and manipulate multiple area
 # Quick Start
 #### Install with Bower
 ```sh
-$ bower install angular-areas
+$ bower install angular-select-areas
 ```
 
 
@@ -20,15 +20,10 @@ $ bower install angular-areas
 			ng-src="aImage.jpg">
 	</div>
 ```
-
-## DEMO and example to learn from.
-Check out the [DEMO](https://rawgit.com/delkant/angular-areas/master/src/main/webapp/demo/index.html)
-
 ## Browser Compatibiilty:
 This plugin is fully compatible with every modern browser and IE >= 9.
 
 # API Doc
-
 ## Area
 An area is described (when retrieved or set) by a json object:
 
